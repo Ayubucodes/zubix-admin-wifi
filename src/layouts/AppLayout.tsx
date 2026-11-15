@@ -35,8 +35,8 @@ export function AppLayout() {
   };
 
   return (
-    <div className="min-h-dvh md:flex">
-      <aside className="border-b border-neutral-200 bg-white md:w-56 md:shrink-0 md:border-b-0 md:border-r">
+    <div className="h-dvh overflow-hidden md:flex">
+      <aside className="shrink-0 border-b border-neutral-200 bg-white md:h-dvh md:w-56 md:overflow-y-auto md:border-b-0 md:border-r">
         <div className="flex items-center justify-between px-4 py-3 md:py-5">
           <span className="flex items-center gap-2 text-sm font-semibold tracking-tight text-neutral-900">
             <span className="flex size-6 items-center justify-center rounded-md bg-brand-700 text-white">
@@ -65,8 +65,8 @@ export function AppLayout() {
         </nav>
       </aside>
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center justify-between gap-4 border-b border-neutral-200 bg-white px-4 py-3 md:px-8">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <header className="flex shrink-0 items-center justify-between gap-4 border-b border-neutral-200 bg-white px-4 py-3 md:px-8">
           <div className="min-w-0">
             <p className="truncate text-sm font-medium text-neutral-900">{user?.fullName}</p>
             <p className="truncate text-xs text-neutral-500">
@@ -85,7 +85,7 @@ export function AppLayout() {
             </button>
           </div>
         </header>
-        <main className="flex-1 space-y-6 px-4 py-6 md:px-8">
+        <main className="min-h-0 flex-1 space-y-6 overflow-y-auto overscroll-contain px-4 py-6 md:px-8">
           <Outlet />
         </main>
       </div>

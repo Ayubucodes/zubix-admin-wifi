@@ -190,22 +190,22 @@ export function ReportSkeleton() {
 export function AppLoadingSkeleton() {
   return (
     <LoadingStatus label="Checking your session">
-      <div className="min-h-dvh md:flex">
-        <aside className="hidden border-r border-neutral-200 bg-white p-5 md:block md:w-56">
+      <div className="h-dvh overflow-hidden md:flex">
+        <aside className="hidden border-r border-neutral-200 bg-white p-5 md:block md:h-dvh md:w-56 md:overflow-y-auto">
           <Skeleton className="mb-8 h-5 w-32" />
           <div className="space-y-3">
             {Array.from({ length: 7 }, (_, index) => <Skeleton key={index} className="h-9 w-full" />)}
           </div>
         </aside>
-        <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex h-16 items-center justify-between border-b border-neutral-200 bg-white px-8">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <header className="flex h-16 shrink-0 items-center justify-between border-b border-neutral-200 bg-white px-8">
             <div className="space-y-2">
               <Skeleton className="h-4 w-32" />
               <Skeleton className="h-3 w-24" />
             </div>
             <Skeleton className="h-9 w-24" />
           </header>
-          <main className="flex-1 space-y-6 px-4 py-6 md:px-8">
+          <main className="min-h-0 flex-1 space-y-6 overflow-y-auto overscroll-contain px-4 py-6 md:px-8">
             <Skeleton className="h-7 w-40" />
             <DashboardSkeleton />
           </main>
