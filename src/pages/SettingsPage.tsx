@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Alert, Badge, Button, Card, EmptyState, PageHeader, Spinner } from "../components/ui";
+import { Alert, Badge, Button, Card, EmptyState, PageHeader, ProviderListSkeleton, TableSkeleton } from "../components/ui";
 import { Pager, TableWrap, tableClass, tdClass, thClass } from "../components/pager";
 import { apiFetch } from "../lib/api";
 import { formatDateTime } from "../lib/format";
@@ -52,7 +52,7 @@ export function SettingsPage() {
 
       {canManage && (
         <Card title="Payment providers">
-          {providersQuery.isLoading && <Spinner />}
+          {providersQuery.isLoading && <ProviderListSkeleton />}
           {providersQuery.data && (
             <ul className="divide-y divide-neutral-100">
               {providersQuery.data.map((p) => {
@@ -74,6 +74,7 @@ export function SettingsPage() {
                       <Button
                         variant={p.isEnabled ? "secondary" : "primary"}
                         disabled={blocked && !p.isEnabled ? true : toggle.isPending}
+                        loading={toggle.isPending && toggle.variables?.code === p.code}
                         onClick={() => toggle.mutate({ code: p.code, enabled: !p.isEnabled })}
                       >
                         {p.isEnabled ? "Disable" : "Enable"}
@@ -89,7 +90,7 @@ export function SettingsPage() {
 
       {canAudit && (
         <Card title="Audit log">
-          {auditQuery.isLoading && <Spinner />}
+          {auditQuery.isLoading && <TableSkeleton columns={4} label="Loading audit log" />}
           {auditQuery.data && auditQuery.data.items.length === 0 && <EmptyState title="No entries yet" />}
           {auditQuery.data && auditQuery.data.items.length > 0 && (
             <>

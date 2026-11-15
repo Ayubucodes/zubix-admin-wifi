@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Alert, Badge, Button, Card, EmptyState, Field, Input, PageHeader, Select, Spinner } from "../components/ui";
+import { Alert, Badge, Button, Card, EmptyState, Field, Input, PageHeader, Select, Skeleton, TableSkeleton } from "../components/ui";
 import { Pager, TableWrap, tableClass, tdClass, thClass } from "../components/pager";
 import { apiFetch, downloadText } from "../lib/api";
 import { formatDateTime, formatTzs } from "../lib/format";
@@ -32,6 +32,7 @@ export function VouchersPage() {
   const [saleFor, setSaleFor] = useState<string | null>(null);
   const [saleChannel, setSaleChannel] = useState<"CASH" | "MOBILE_MONEY">("CASH");
   const [saleAmount, setSaleAmount] = useState("");
+  const [revealingBatchId, setRevealingBatchId] = useState<string | null>(null);
 
   // Batch generation form
   const [batchName, setBatchName] = useState("");
@@ -114,6 +115,7 @@ export function VouchersPage() {
       setNotice("A reason of at least 5 characters is needed to reveal codes.");
       return;
     }
+    setRevealingBatchId(batch.id);
     try {
       const result = await apiFetch<{ batchName: string; items: VoucherCodeRow[] }>(
         `/vouchers/batches/${batch.id}/codes?reason=${encodeURIComponent(reason.trim())}`,
@@ -134,6 +136,8 @@ export function VouchersPage() {
       setNotice("Codes revealed and downloaded. This reveal is recorded in the audit log.");
     } catch (error) {
       setNotice((error as Error).message);
+    } finally {
+      setRevealingBatchId(null);
     }
   };
 
@@ -173,6 +177,7 @@ export function VouchersPage() {
                   <option key={p.id} value={p.id}>{p.name} · {formatTzs(p.priceTzs)}</option>
                 ))}
               </Select>
+              {packagesQuery.isLoading && <Skeleton className="mt-2 h-3 w-2/3" />}
             </Field>
             <Field label="Quantity" hint="1 to 500">
               <Input type="number" min={1} max={500} value={batchQuantity} onChange={(e) => setBatchQuantity(e.target.value)} required />
@@ -190,7 +195,7 @@ export function VouchersPage() {
       )}
 
       <Card title="Batches">
-        {batchesQuery.isLoading && <Spinner />}
+        {batchesQuery.isLoading && <TableSkeleton columns={7} label="Loading voucher batches" />}
         {batchesQuery.data && batchesQuery.data.items.length === 0 && <EmptyState title="No batches yet" />}
         {batchesQuery.data && batchesQuery.data.items.length > 0 && (
           <>
@@ -221,7 +226,7 @@ export function VouchersPage() {
                       <td className={`${tdClass} tabular-nums`}>{b.revokedCount}</td>
                       <td className={`${tdClass} text-right`}>
                         {canManage && (
-                          <Button variant="secondary" onClick={() => void revealBatch(b)}>
+                          <Button variant="secondary" onClick={() => void revealBatch(b)} loading={revealingBatchId === b.id}>
                             Reveal and download codes
                           </Button>
                         )}
@@ -248,7 +253,7 @@ export function VouchersPage() {
           </Select>
         }
       >
-        {vouchersQuery.isLoading && <Spinner />}
+        {vouchersQuery.isLoading && <TableSkeleton columns={6} label="Loading vouchers" />}
         {vouchersQuery.data && vouchersQuery.data.items.length === 0 && <EmptyState title="No vouchers match" />}
         {vouchersQuery.data && vouchersQuery.data.items.length > 0 && (
           <>
@@ -288,6 +293,7 @@ export function VouchersPage() {
                         {canManage && v.status === "ACTIVE" && (
                           <Button
                             variant="ghost"
+                            loading={revoke.isPending && revoke.variables?.id === v.id}
                             onClick={() => {
                               const reason = window.prompt("Reason for revoking this voucher (at least 5 characters):");
                               if (reason && reason.trim().length >= 5) revoke.mutate({ id: v.id, reason: reason.trim() });

@@ -86,6 +86,24 @@
   --c-sky-800: #bae6fd;
 }
 
+.skeleton {
+  background: linear-gradient(100deg, var(--c-n100) 30%, var(--c-n200) 50%, var(--c-n100) 70%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
 @theme {
   --color-white: var(--c-white);
   --color-neutral-50: var(--c-n50);

@@ -63,7 +63,7 @@ export function LoginPage() {
           <Field label="Password" error={errors.password?.message}>
             <Input type="password" autoComplete="current-password" {...register("password")} />
           </Field>
-          <Button type="submit" className="w-full" loading={isSubmitting}>
+          <Button type="submit" className="w-full" loading={isSubmitting} loadingIndicator="spinner">
             Sign in
           </Button>
         </form>

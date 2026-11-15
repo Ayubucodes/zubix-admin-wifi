@@ -4,8 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zubix WiFi Admin</title>
-    <script type="module" crossorigin src="/assets/index-DXymm0xU.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-Dv0IptJW.css">
+    <script>
+      // Apply the saved theme before first paint so the page never flashes the wrong colours.
+      (function () {
+        try {
+          var mode = localStorage.getItem("zubix.theme") || "system";
+          var dark = mode === "dark" || (mode === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-kEyD-_Lh.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-sv0mX3e-.css">
   </head>
   <body class="bg-neutral-50 text-neutral-900 antialiased">
     <div id="root"></div>

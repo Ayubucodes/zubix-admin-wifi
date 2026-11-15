@@ -12,7 +12,7 @@ import { SubscriptionsPage } from "./pages/SubscriptionsPage";
 import { NetworkPage } from "./pages/NetworkPage";
 import { ReportsPage } from "./pages/ReportsPage";
 import { SettingsPage } from "./pages/SettingsPage";
-import { Spinner } from "./components/ui";
+import { AppLoadingSkeleton } from "./components/ui";
 import type { PermissionCode } from "./types/api";
 
 const queryClient = new QueryClient({
@@ -24,7 +24,7 @@ const queryClient = new QueryClient({
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { status } = useAuth();
   const location = useLocation();
-  if (status === "loading") return <Spinner label="Checking your session" />;
+  if (status === "loading") return <AppLoadingSkeleton />;
   if (status === "anonymous") {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }

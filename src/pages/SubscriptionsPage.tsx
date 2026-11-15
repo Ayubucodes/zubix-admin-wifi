@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Alert, Badge, Button, Card, EmptyState, Field, PageHeader, Select, Spinner, Textarea } from "../components/ui";
+import { Alert, Badge, Button, Card, DetailSkeleton, EmptyState, Field, PageHeader, Select, TableSkeleton, Textarea } from "../components/ui";
 import { Pager, TableWrap, tableClass, tdClass, thClass } from "../components/pager";
 import { apiFetch } from "../lib/api";
 import { formatDateTime } from "../lib/format";
@@ -72,7 +72,7 @@ export function SubscriptionsPage() {
           </Select>
         </div>
 
-        {listQuery.isLoading && <Spinner />}
+        {listQuery.isLoading && <TableSkeleton columns={5} label="Loading subscriptions" />}
         {listQuery.isError && <Alert>{(listQuery.error as Error).message}</Alert>}
         {listQuery.data && listQuery.data.items.length === 0 && <EmptyState title="No subscriptions yet" />}
         {listQuery.data && listQuery.data.items.length > 0 && (
@@ -113,7 +113,7 @@ export function SubscriptionsPage() {
 
       {selectedId && (
         <Card title="Subscription detail" actions={<Button variant="ghost" onClick={() => setSelectedId(null)}>Close</Button>}>
-          {detailQuery.isLoading && <Spinner />}
+          {detailQuery.isLoading && <DetailSkeleton />}
           {detailQuery.data && (
             <div className="space-y-6 text-sm">
               <dl className="grid gap-4 sm:grid-cols-3">

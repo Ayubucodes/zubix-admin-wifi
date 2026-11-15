@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Alert, Badge, Button, Card, EmptyState, PageHeader, Select, Spinner, Input } from "../components/ui";
+import { Alert, Badge, Button, Card, DetailSkeleton, EmptyState, PageHeader, Select, TableSkeleton, Input } from "../components/ui";
 import { Pager, TableWrap, tableClass, tdClass, thClass } from "../components/pager";
 import { apiFetch } from "../lib/api";
 import { formatDateTime, formatTzs } from "../lib/format";
@@ -84,7 +84,7 @@ export function CustomersPage() {
           </Select>
         </div>
 
-        {listQuery.isLoading && <Spinner />}
+        {listQuery.isLoading && <TableSkeleton columns={6} label="Loading customers" />}
         {listQuery.isError && <Alert>{(listQuery.error as Error).message}</Alert>}
         {listQuery.data && listQuery.data.items.length === 0 && <EmptyState title="No customers match these filters" />}
         {listQuery.data && listQuery.data.items.length > 0 && (
@@ -118,7 +118,12 @@ export function CustomersPage() {
                       <td className={tdClass}>{formatDateTime(c.createdAt)}</td>
                       <td className={`${tdClass} text-right`}>
                         {canManage && (
-                          <Button variant="secondary" onClick={() => toggleStatus(c)} disabled={statusMutation.isPending}>
+                          <Button
+                            variant="secondary"
+                            onClick={() => toggleStatus(c)}
+                            disabled={statusMutation.isPending}
+                            loading={statusMutation.isPending && statusMutation.variables?.id === c.id}
+                          >
                             {c.status === "ACTIVE" ? "Suspend" : "Reactivate"}
                           </Button>
                         )}
@@ -135,7 +140,7 @@ export function CustomersPage() {
 
       {selectedId && (
         <Card title="Customer detail" actions={<Button variant="ghost" onClick={() => setSelectedId(null)}>Close</Button>}>
-          {detailQuery.isLoading && <Spinner />}
+          {detailQuery.isLoading && <DetailSkeleton />}
           {detailQuery.data && (
             <div className="space-y-6 text-sm">
               <dl className="grid gap-4 sm:grid-cols-3">

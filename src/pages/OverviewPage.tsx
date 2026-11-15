@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Alert, Card, EmptyState, PageHeader, Spinner, StatTile } from "../components/ui";
+import { Alert, Card, DashboardSkeleton, EmptyState, PageHeader, StatTile } from "../components/ui";
 import { apiFetch } from "../lib/api";
 import { formatDateTime, formatNumber, formatTzs } from "../lib/format";
 import type { DashboardOverview } from "../types/api";
@@ -19,7 +19,7 @@ export function OverviewPage() {
         description={query.data ? `Updated ${formatDateTime(query.data.generatedAt)} (Dar es Salaam time)` : "Live figures from the database"}
       />
 
-      {query.isPending && <Spinner label="Loading dashboard" />}
+      {query.isPending && <DashboardSkeleton />}
       {query.isError && <Alert>{query.error.message}</Alert>}
 
       {query.data && (

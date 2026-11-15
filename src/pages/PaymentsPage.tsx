@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Alert, Badge, Button, Card, EmptyState, PageHeader, Select, Spinner, Input } from "../components/ui";
+import { Alert, Badge, Button, Card, DetailSkeleton, EmptyState, PageHeader, Select, TableSkeleton, Input } from "../components/ui";
 import { Pager, TableWrap, tableClass, tdClass, thClass } from "../components/pager";
 import { ApiError, apiFetch } from "../lib/api";
 import { formatDateTime, formatTzs } from "../lib/format";
@@ -99,7 +99,7 @@ export function PaymentsPage() {
           </Select>
         </div>
 
-        {listQuery.isLoading && <Spinner />}
+        {listQuery.isLoading && <TableSkeleton columns={6} label="Loading payments" />}
         {listQuery.isError && <Alert>{(listQuery.error as Error).message}</Alert>}
         {listQuery.data && listQuery.data.items.length === 0 && <EmptyState title="No payments match these filters" />}
         {listQuery.data && listQuery.data.items.length > 0 && (
@@ -141,7 +141,7 @@ export function PaymentsPage() {
 
       {selectedRef && (
         <Card title={`Payment ${selectedRef}`} actions={<Button variant="ghost" onClick={() => setSelectedRef(null)}>Close</Button>}>
-          {detailQuery.isLoading && <Spinner />}
+          {detailQuery.isLoading && <DetailSkeleton />}
           {detailQuery.data && (
             <div className="space-y-5 text-sm">
               <dl className="grid gap-4 sm:grid-cols-3">
@@ -163,7 +163,7 @@ export function PaymentsPage() {
                   <div className="mt-3 flex gap-2">
                     <Button
                       onClick={() => simulateMutation.mutate({ reference: selectedRef, outcome: "SUCCESS" })}
-                      loading={simulateMutation.isPending}
+                      loading={simulateMutation.isPending && simulateMutation.variables?.outcome === "SUCCESS"}
                     >
                       Simulate success
                     </Button>
@@ -171,6 +171,7 @@ export function PaymentsPage() {
                       variant="secondary"
                       onClick={() => simulateMutation.mutate({ reference: selectedRef, outcome: "FAILED" })}
                       disabled={simulateMutation.isPending}
+                      loading={simulateMutation.isPending && simulateMutation.variables?.outcome === "FAILED"}
                     >
                       Simulate failure
                     </Button>

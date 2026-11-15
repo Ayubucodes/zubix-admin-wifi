@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Alert, Badge, Button, Card, Field, Input, PageHeader, Select, Spinner, Textarea, EmptyState } from "../components/ui";
+import { Alert, Badge, Button, Card, Field, Input, PageHeader, Select, TableSkeleton, Textarea, EmptyState, Skeleton } from "../components/ui";
 import { ApiError, apiFetch } from "../lib/api";
 import { formatDateTime, formatTzs } from "../lib/format";
 import { useAuth } from "../features/auth/AuthContext";
@@ -140,6 +140,7 @@ export function PackagesPage() {
           key={editing === "new" ? "new" : editing.id}
           initial={editing === "new" ? null : editing}
           locations={locationsQuery.data?.items ?? []}
+          locationsLoading={locationsQuery.isLoading}
           onDone={(message) => {
             setEditing(null);
             setNotice(message);
@@ -178,7 +179,7 @@ export function PackagesPage() {
           </div>
         }
       >
-        {listQuery.isPending && <Spinner label="Loading packages" />}
+        {listQuery.isPending && <TableSkeleton columns={canManage ? 7 : 6} label="Loading packages" />}
         {listQuery.isError && <Alert>{listQuery.error.message}</Alert>}
         {listQuery.data && listQuery.data.items.length === 0 && (
           <EmptyState title="No packages yet" description={canManage ? "Create your first package to start selling internet access." : undefined} />
@@ -270,11 +271,13 @@ export function PackagesPage() {
 function PackageForm({
   initial,
   locations,
+  locationsLoading,
   onDone,
   onCancel,
 }: {
   initial: PackageDto | null;
   locations: LocationDto[];
+  locationsLoading: boolean;
   onDone: (message: string) => void;
   onCancel: () => void;
 }) {
@@ -348,7 +351,12 @@ function PackageForm({
 
         <fieldset className="space-y-2">
           <legend className="text-sm font-medium text-neutral-800">Available at locations</legend>
-          {locations.length === 0 ? (
+          {locationsLoading ? (
+            <div className="grid gap-3 sm:grid-cols-2" role="status" aria-label="Loading locations">
+              <Skeleton className="h-5 w-full" />
+              <Skeleton className="h-5 w-4/5" />
+            </div>
+          ) : locations.length === 0 ? (
             <p className="text-sm text-neutral-500">No locations yet. Create one before assigning packages.</p>
           ) : (
             <div className="grid gap-2 sm:grid-cols-2">

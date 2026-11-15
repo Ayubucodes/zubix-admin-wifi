@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Alert, Badge, Card, EmptyState, PageHeader, Spinner, StatTile } from "../components/ui";
+import { Alert, Badge, Card, EmptyState, NetworkSkeleton, PageHeader, StatTile } from "../components/ui";
 import { TableWrap, tableClass, tdClass, thClass } from "../components/pager";
 import { apiFetch } from "../lib/api";
 import { formatDateTime } from "../lib/format";
@@ -20,7 +20,7 @@ export function NetworkPage() {
         Live status is not connected yet. Access point and session counts show what was last recorded in the database, not what the Omada controller reports now.
       </Alert>
 
-      {query.isLoading && <Spinner />}
+      {query.isLoading && <NetworkSkeleton />}
       {query.isError && <Alert>{(query.error as Error).message}</Alert>}
 
       {query.data && (
