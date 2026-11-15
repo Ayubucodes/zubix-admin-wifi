@@ -4,39 +4,40 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Every colour the app uses is a variable here, so the whole interface flips between light and dark
- * from one place. The accent ("brand") is black in light mode and white in dark mode. Red, amber,
- * green and blue are kept only for status, where colour carries meaning.
+ * Theme tokens keep the Zubix teal-and-gold palette consistent in light and dark modes.
  */
 :root {
   color-scheme: light;
   --c-white: #ffffff;
-  --c-n50: #fafafa;
-  --c-n100: #f5f5f5;
-  --c-n200: #e5e5e5;
-  --c-n300: #d4d4d4;
-  --c-n400: #a3a3a3;
-  --c-n500: #737373;
-  --c-n600: #525252;
-  --c-n700: #404040;
-  --c-n800: #262626;
-  --c-n900: #171717;
+  --c-n50: #f0f6f6;
+  --c-n100: #e7f0f0;
+  --c-n200: #d6e4e4;
+  --c-n300: #bdcecf;
+  --c-n400: #8ca7a9;
+  --c-n500: #617b7d;
+  --c-n600: #405b5e;
+  --c-n700: #2a474b;
+  --c-n800: #12383d;
+  --c-n900: #062c33;
 
-  --c-brand-50: #f5f5f5;
-  --c-brand-100: #e5e5e5;
-  --c-brand-600: #262626;
-  --c-brand-700: #0a0a0a;
-  --c-brand-800: #000000;
+  --c-brand-50: #e8f4f3;
+  --c-brand-100: #d3eae9;
+  --c-brand-600: #0f777b;
+  --c-brand-700: #0b686d;
+  --c-brand-800: #07545a;
+  --c-brand-900: #062c33;
+
+  --c-gold-500: #f6b21a;
 
   --c-red-50: #fef2f2;
   --c-red-200: #fecaca;
   --c-red-600: #dc2626;
   --c-red-700: #b91c1c;
   --c-red-800: #991b1b;
-  --c-amber-50: #fffbeb;
-  --c-amber-200: #fde68a;
-  --c-amber-800: #92400e;
-  --c-amber-900: #78350f;
+  --c-amber-50: #fff8e6;
+  --c-amber-200: #f6d675;
+  --c-amber-800: #805700;
+  --c-amber-900: #624000;
   --c-emerald-50: #ecfdf5;
   --c-emerald-200: #a7f3d0;
   --c-emerald-700: #047857;
@@ -49,33 +50,34 @@
 
 .dark {
   color-scheme: dark;
-  --c-white: #131314;
-  --c-n50: #0b0b0c;
-  --c-n100: #1b1b1d;
-  --c-n200: #2a2a2d;
-  --c-n300: #3d3d41;
-  --c-n400: #71717a;
-  --c-n500: #a1a1aa;
-  --c-n600: #b4b4bb;
-  --c-n700: #d4d4d8;
-  --c-n800: #e4e4e7;
-  --c-n900: #fafafa;
+  --c-white: #102c30;
+  --c-n50: #071d20;
+  --c-n100: #102a2e;
+  --c-n200: #1d3b3f;
+  --c-n300: #315357;
+  --c-n400: #648185;
+  --c-n500: #91aaac;
+  --c-n600: #b3c5c6;
+  --c-n700: #d0dede;
+  --c-n800: #e4eeee;
+  --c-n900: #f5fbfb;
 
-  --c-brand-50: #1d1d20;
-  --c-brand-100: #2a2a2d;
-  --c-brand-600: #d4d4d8;
-  --c-brand-700: #fafafa;
-  --c-brand-800: #ffffff;
+  --c-brand-50: #17383b;
+  --c-brand-100: #21484b;
+  --c-brand-600: #31a2a3;
+  --c-brand-700: #0b686d;
+  --c-brand-800: #084d52;
+  --c-brand-900: #062c33;
 
   --c-red-50: #2a1214;
   --c-red-200: #5b1f24;
   --c-red-600: #f87171;
   --c-red-700: #fca5a5;
   --c-red-800: #fecaca;
-  --c-amber-50: #2a2008;
-  --c-amber-200: #5c4410;
-  --c-amber-800: #fcd34d;
-  --c-amber-900: #fde68a;
+  --c-amber-50: #332813;
+  --c-amber-200: #775914;
+  --c-amber-800: #ffce4d;
+  --c-amber-900: #ffe097;
   --c-emerald-50: #0b2a1d;
   --c-emerald-200: #14532d;
   --c-emerald-700: #6ee7b7;
@@ -122,6 +124,9 @@
   --color-brand-600: var(--c-brand-600);
   --color-brand-700: var(--c-brand-700);
   --color-brand-800: var(--c-brand-800);
+  --color-brand-900: var(--c-brand-900);
+  --color-gold-500: var(--c-gold-500);
+  --color-solid-white: #ffffff;
 
   --color-red-50: var(--c-red-50);
   --color-red-200: var(--c-red-200);

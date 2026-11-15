@@ -47,8 +47,11 @@ export function LoginPage() {
       </div>
       <div className="w-full max-w-sm space-y-6">
         <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-brand-700">Zubix WiFi</p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-900">Sign in to the admin</h1>
+          <div className="mb-4 flex items-center justify-center gap-3">
+            <img src="/favicon.svg" alt="" className="size-12 rounded-xl" />
+            <p className="text-left text-lg font-semibold tracking-tight text-neutral-900">Zubix WiFi</p>
+          </div>
+          <h1 className="text-2xl font-semibold tracking-tight text-neutral-900">Sign in to the admin</h1>
         </div>
 
         <form

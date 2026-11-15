@@ -10,10 +10,10 @@ type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 type LoadingIndicator = "shimmer" | "spinner";
 
 const buttonVariants: Record<ButtonVariant, string> = {
-  primary: "bg-brand-700 text-white hover:bg-brand-800 disabled:bg-brand-700/50",
+  primary: "bg-brand-700 text-solid-white hover:bg-brand-800 disabled:bg-brand-700/50",
   secondary: "bg-white text-neutral-900 ring-1 ring-inset ring-neutral-300 hover:bg-neutral-50 disabled:text-neutral-400",
   ghost: "text-neutral-700 hover:bg-neutral-100 disabled:text-neutral-400",
-  danger: "bg-red-600 text-white hover:bg-red-700 disabled:bg-red-600/50",
+  danger: "bg-red-600 text-solid-white hover:bg-red-700 disabled:bg-red-600/50",
 };
 
 export function Button({
@@ -57,7 +57,7 @@ function LoadingStatus({ label, children }: { label: string; children: ReactNode
 
 function SkeletonTile() {
   return (
-    <div className="rounded-lg border border-neutral-200 bg-white p-4">
+    <div className="rounded-lg border border-neutral-200 border-t-2 border-t-brand-600 bg-white p-4">
       <Skeleton className="h-3 w-2/5" />
       <Skeleton className="mt-3 h-7 w-3/5" />
       <Skeleton className="mt-2 h-3 w-1/2" />
@@ -191,8 +191,11 @@ export function AppLoadingSkeleton() {
   return (
     <LoadingStatus label="Checking your session">
       <div className="h-dvh overflow-hidden md:flex">
-        <aside className="hidden border-r border-neutral-200 bg-white p-5 md:block md:h-dvh md:w-56 md:overflow-y-auto">
-          <Skeleton className="mb-8 h-5 w-32" />
+        <aside className="hidden border-r border-brand-800 bg-brand-900 p-5 md:block md:h-dvh md:w-56 md:overflow-y-auto">
+          <div className="mb-8 flex items-center gap-2 text-sm font-semibold text-solid-white">
+            <img src="/favicon.svg" alt="" className="size-8 rounded-md" />
+            Zubix WiFi
+          </div>
           <div className="space-y-3">
             {Array.from({ length: 7 }, (_, index) => <Skeleton key={index} className="h-9 w-full" />)}
           </div>
@@ -257,7 +260,7 @@ export function Card({ title, actions, children, className = "" }: { title?: str
 
 export function StatTile({ label, value, hint, loading = false }: { label: string; value: string; hint?: string; loading?: boolean }) {
   return (
-    <div className="rounded-lg border border-neutral-200 bg-white p-4">
+    <div className="rounded-lg border border-neutral-200 border-t-2 border-t-brand-600 bg-white p-4">
       <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">{label}</p>
       <p className="mt-2 text-2xl font-semibold tabular-nums text-neutral-900">
         {loading ? <Skeleton className="mt-1 h-6 w-3/5" /> : value}
