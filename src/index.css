@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/* Dark mode is switched by a "dark" class on <html>, set by lib/theme.ts. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Every colour the app uses is a variable here, so the whole interface flips between light and dark
+ * from one place. The accent ("brand") is black in light mode and white in dark mode. Red, amber,
+ * green and blue are kept only for status, where colour carries meaning.
+ */
+:root {
+  color-scheme: light;
+  --c-white: #ffffff;
+  --c-n50: #fafafa;
+  --c-n100: #f5f5f5;
+  --c-n200: #e5e5e5;
+  --c-n300: #d4d4d4;
+  --c-n400: #a3a3a3;
+  --c-n500: #737373;
+  --c-n600: #525252;
+  --c-n700: #404040;
+  --c-n800: #262626;
+  --c-n900: #171717;
+
+  --c-brand-50: #f5f5f5;
+  --c-brand-100: #e5e5e5;
+  --c-brand-600: #262626;
+  --c-brand-700: #0a0a0a;
+  --c-brand-800: #000000;
+
+  --c-red-50: #fef2f2;
+  --c-red-200: #fecaca;
+  --c-red-600: #dc2626;
+  --c-red-700: #b91c1c;
+  --c-red-800: #991b1b;
+  --c-amber-50: #fffbeb;
+  --c-amber-200: #fde68a;
+  --c-amber-800: #92400e;
+  --c-amber-900: #78350f;
+  --c-emerald-50: #ecfdf5;
+  --c-emerald-200: #a7f3d0;
+  --c-emerald-700: #047857;
+  --c-emerald-800: #065f46;
+  --c-sky-50: #f0f9ff;
+  --c-sky-200: #bae6fd;
+  --c-sky-700: #0369a1;
+  --c-sky-800: #075985;
+}
+
+.dark {
+  color-scheme: dark;
+  --c-white: #131314;
+  --c-n50: #0b0b0c;
+  --c-n100: #1b1b1d;
+  --c-n200: #2a2a2d;
+  --c-n300: #3d3d41;
+  --c-n400: #71717a;
+  --c-n500: #a1a1aa;
+  --c-n600: #b4b4bb;
+  --c-n700: #d4d4d8;
+  --c-n800: #e4e4e7;
+  --c-n900: #fafafa;
+
+  --c-brand-50: #1d1d20;
+  --c-brand-100: #2a2a2d;
+  --c-brand-600: #d4d4d8;
+  --c-brand-700: #fafafa;
+  --c-brand-800: #ffffff;
+
+  --c-red-50: #2a1214;
+  --c-red-200: #5b1f24;
+  --c-red-600: #f87171;
+  --c-red-700: #fca5a5;
+  --c-red-800: #fecaca;
+  --c-amber-50: #2a2008;
+  --c-amber-200: #5c4410;
+  --c-amber-800: #fcd34d;
+  --c-amber-900: #fde68a;
+  --c-emerald-50: #0b2a1d;
+  --c-emerald-200: #14532d;
+  --c-emerald-700: #6ee7b7;
+  --c-emerald-800: #a7f3d0;
+  --c-sky-50: #0b2231;
+  --c-sky-200: #164e63;
+  --c-sky-700: #7dd3fc;
+  --c-sky-800: #bae6fd;
+}
+
+@theme {
+  --color-white: var(--c-white);
+  --color-neutral-50: var(--c-n50);
+  --color-neutral-100: var(--c-n100);
+  --color-neutral-200: var(--c-n200);
+  --color-neutral-300: var(--c-n300);
+  --color-neutral-400: var(--c-n400);
+  --color-neutral-500: var(--c-n500);
+  --color-neutral-600: var(--c-n600);
+  --color-neutral-700: var(--c-n700);
+  --color-neutral-800: var(--c-n800);
+  --color-neutral-900: var(--c-n900);
+
+  --color-brand-50: var(--c-brand-50);
+  --color-brand-100: var(--c-brand-100);
+  --color-brand-600: var(--c-brand-600);
+  --color-brand-700: var(--c-brand-700);
+  --color-brand-800: var(--c-brand-800);
+
+  --color-red-50: var(--c-red-50);
+  --color-red-200: var(--c-red-200);
+  --color-red-600: var(--c-red-600);
+  --color-red-700: var(--c-red-700);
+  --color-red-800: var(--c-red-800);
+  --color-amber-50: var(--c-amber-50);
+  --color-amber-200: var(--c-amber-200);
+  --color-amber-800: var(--c-amber-800);
+  --color-amber-900: var(--c-amber-900);
+  --color-emerald-50: var(--c-emerald-50);
+  --color-emerald-200: var(--c-emerald-200);
+  --color-emerald-700: var(--c-emerald-700);
+  --color-emerald-800: var(--c-emerald-800);
+  --color-sky-50: var(--c-sky-50);
+  --color-sky-200: var(--c-sky-200);
+  --color-sky-700: var(--c-sky-700);
+  --color-sky-800: var(--c-sky-800);
+}
