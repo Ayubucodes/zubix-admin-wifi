@@ -40,12 +40,18 @@ export function PaymentsPage() {
       return apiFetch<PagedResult<PaymentDto>>(`/payments?${params.toString()}`);
     },
     enabled: hasPermission("payments:read"),
+    refetchInterval: (query) =>
+      query.state.data?.items.some((payment) => payment.status === "PENDING" || payment.status === "PROCESSING")
+        ? 10_000
+        : false,
   });
 
   const detailQuery = useQuery({
     queryKey: ["payments", "detail", selectedRef],
     queryFn: () => apiFetch<PaymentDto>(`/payments/${selectedRef}`),
     enabled: selectedRef !== null,
+    refetchInterval: (query) =>
+      query.state.data?.status === "PENDING" || query.state.data?.status === "PROCESSING" ? 10_000 : false,
   });
 
   const simulateMutation = useMutation({
