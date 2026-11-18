@@ -34,6 +34,7 @@ export function SubscriptionsPage() {
       if (status) params.set("status", status);
       return apiFetch<PagedResult<SubscriptionListItem>>(`/subscriptions?${params.toString()}`);
     },
+    refetchInterval: 30_000,
   });
 
   const detailQuery = useQuery({
