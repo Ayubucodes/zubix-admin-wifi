@@ -40,6 +40,7 @@ export function SubscriptionsPage() {
     queryKey: ["subscriptions", selectedId],
     queryFn: () => apiFetch<SubscriptionDetail>(`/subscriptions/${selectedId}`),
     enabled: selectedId !== null,
+    refetchInterval: selectedId ? 10_000 : false,
   });
 
   const cancelMutation = useMutation({
@@ -128,7 +129,9 @@ export function SubscriptionsPage() {
               <div>
                 <h3 className="mb-2 font-semibold text-neutral-900">Network authorizations</h3>
                 {detailQuery.data.authorizations.length === 0 ? (
-                  <p className="text-neutral-500">No network authorization attempts recorded yet. The Omada step is not connected.</p>
+                  <p className="text-neutral-500">
+                    No network authorization attempts are recorded for this pass. If payment succeeded but Wi-Fi did not, confirm an active network site is mapped to its location and retry from the portal.
+                  </p>
                 ) : (
                   <ul className="divide-y divide-neutral-100">
                     {detailQuery.data.authorizations.map((a, i) => (

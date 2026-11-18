@@ -11,13 +11,14 @@ export function NetworkPage() {
   const query = useQuery({
     queryKey: ["network", "overview"],
     queryFn: () => apiFetch<NetworkOverview>("/network/overview"),
+    refetchInterval: 10_000,
   });
 
   return (
     <>
       <PageHeader title="Network" description="Read-only view of the access points and controllers." />
       <Alert tone="info">
-        Live status is not connected yet. Access point and session counts show what was last recorded in the database, not what the Omada controller reports now.
+        Live AP and client status is not connected yet. Counts show the last records in the database; new authorization failures appear under Recent events.
       </Alert>
 
       {query.isLoading && <NetworkSkeleton />}
